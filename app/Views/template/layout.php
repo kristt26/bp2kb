@@ -1,26 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="apps">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Kapella Bootstrap Admin Dashboard Template</title>
-    <!-- base:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/base/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
 </head>
 
-<body>
+<body ng-controller="indexController">
     <div class="container-scroller">
-        <!-- partial:partials/_horizontal-navbar.html -->
         <div class="horizontal-menu">
             <nav class="navbar top-navbar col-lg-12 col-12 p-0">
                 <div class="container-fluid">
@@ -85,7 +77,6 @@
             </nav>
             <?=view('template/menu')?>
         </div>
-        <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -144,25 +135,41 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- base:js -->
+
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/angular/angular.js"></script>
     <script src="assets/vendors/base/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
     <script src="assets/js/template.js"></script>
-    <!-- endinject -->
-    <!-- plugin js for this page -->
-    <!-- End plugin js for this page -->
     <script src="assets/vendors/chart.js/Chart.min.js"></script>
     <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
     <script src="assets/vendors/chartjs-plugin-datalabels/chartjs-plugin-datalabels.js"></script>
     <script src="assets/vendors/justgage/raphael-2.1.4.min.js"></script>
     <script src="assets/vendors/justgage/justgage.js"></script>
-    <!-- Custom js for this page-->
     <script src="assets/js/dashboard.js"></script>
-    <!-- End custom js for this page-->
-</body>
 
-</html>
+    <script src="apps/apps.js"></script>
+    <script src="apps/controllers/admin.controllers.js"></script>
+    <script src="apps/services/helper.services.js"></script>
+    <script src="apps/services/auth.services.js"></script>
+    <script src="apps/services/admin.services.js"></script>
+
+
+    <script src="apps/services/message.services.js"></script>
+    <script src="assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="assets/libs/swangular/swangular.js"></script>
+    <script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/libs/angular-datatables/dist/angular-datatables.min.js"></script>
+    <script src="assets/libs/angular-locale_id-id.js"></script>
+    <script src="assets/libs/input-mask/angular-input-masks-standalone.min.js"></script>
+    <script src="assets/libs/jquery.PrintArea.js"></script>
+    <script src="assets/libs/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
+    <script src="assets/libs/loading/dist/loadingoverlay.min.js"></script>
+    <script src="assets/libs/calendar/main.min.js"></script>
+    <script src="assets/libs/calendar/locales-all.min.js"></script>
+    <script src="assets/libs/angularjs-currency-input-mask/dist/angularjs-currency-input-mask.min.js">
+    </script>
+    <script src="assets/libs/jquery.PrintArea.js">
+    < /body>
+
+    <
+    /html>

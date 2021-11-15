@@ -9,7 +9,7 @@ angular.module('apps', [
     'ngLocale',
     'datatables',
     'cur.$mask',
-    'ngSanitize'
+    // 'ngSanitize'
 
 ])
     .run(function ($rootScope) {

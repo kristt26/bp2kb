@@ -2,12 +2,26 @@
     <div class="container">
         <ul class="nav page-navigation">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?=base_url('home')?>">
                     <i class="mdi mdi-file-document-box menu-icon"></i>
                     <span class="menu-title">Home</span>
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<?=base_url('penduduk')?>">
+                    <i class="mdi mdi-file-document-box menu-icon"></i>
+                    <span class="menu-title">Penduduk</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="pages/forms/basic_elements.html" class="nav-link">
+                    <i class="mdi mdi-chart-areaspline menu-icon"></i>
+                    <span class="menu-title">Form Elements</span>
+                    <i class="menu-arrow"></i>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="mdi mdi-cube-outline menu-icon"></i>
                     <span class="menu-title">UI Elements</span>
@@ -20,14 +34,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a href="pages/forms/basic_elements.html" class="nav-link">
-                    <i class="mdi mdi-chart-areaspline menu-icon"></i>
-                    <span class="menu-title">Form Elements</span>
-                    <i class="menu-arrow"></i>
-                </a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a href="pages/charts/chartjs.html" class="nav-link">
                     <i class="mdi mdi-finance menu-icon"></i>

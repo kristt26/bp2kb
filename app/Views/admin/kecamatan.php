@@ -20,6 +20,7 @@
                                     <label for="jenis" class="col-sm-3 col-form-label">Status Kecamatan</label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="jenis" ng-model="model.jenis">
+                                            <option value=""></option>
                                             <option value="Kecamatan">Kecamatan</option>
                                             <option value="Distrik">Distrik</option>
                                         </select>
@@ -55,7 +56,7 @@
                                             <td>{{item.kecamatan}}</td>
                                             <td>{{item.jenis}}</td>
                                             <td class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2">
+                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2" ng-click="edit(item)">
                                                     <i class="mdi mdi-pencil-outline"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-rounded btn-icon mr-2"
@@ -64,49 +65,6 @@
                                                 </button>
                                                 <button type="button" class="btn btn-success btn-rounded btn-icon"
                                                     ng-click="detailKecamatan(item)">
-                                                    <i class="mdi mdi-eye-outline"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div ng-show="setDetail" ng-class="{'col-md-8 rotate': setDetail}">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">List Kelurahan {{kelurahan.kecamatan}}</h4>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#tambahKelurahan">Tambah</button>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-inverse table-responsive">
-                                    <thead class="thead-inverse">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Kelurahan</th>
-                                            <th>Jenis</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="item in kelurahan.kelurahan">
-                                            <td scope="row">{{$index+1}}</td>
-                                            <td>{{item.kelurahan}}</td>
-                                            <td>{{item.jenis}}</td>
-                                            <td class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2">
-                                                    <i class="mdi mdi-pencil-outline"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-rounded btn-icon mr-2"
-                                                    ng-click="hapus(item)">
-                                                    <i class="mdi mdi-delete-outline"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-success btn-rounded btn-icon"
-                                                    ng-click="detail(item)">
                                                     <i class="mdi mdi-eye-outline"></i>
                                                 </button>
                                             </td>

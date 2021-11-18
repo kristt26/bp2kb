@@ -35,7 +35,7 @@ class Kecamatan extends ResourceController
     public function put($id = null)
     {
         $data = $this->request->getJSON();
-        $this->model->uodate($id, $data);
+        $this->model->update($id, $data);
         return $this->respond($data);
     }
     public function delete($id = null)

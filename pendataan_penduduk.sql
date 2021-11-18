@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2021 at 11:54 AM
+-- Generation Time: Nov 18, 2021 at 04:34 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -50,8 +50,8 @@ CREATE TABLE `kecamatans` (
 --
 
 INSERT INTO `kecamatans` (`id`, `kecamatan`, `jenis`) VALUES
-(1, 'Kaureh', 'Kecamatan'),
-(2, 'Airu', 'Kecamatan'),
+(1, 'Kaureh', 'Distrik'),
+(2, 'Airu', 'Distrik'),
 (3, 'Yapsi', 'Kecamatan'),
 (4, 'Kemtuk', 'Kecamatan'),
 (5, 'Kemtuk Gresi', 'Kecamatan'),
@@ -268,8 +268,18 @@ CREATE TABLE `pertanyaan` (
 
 CREATE TABLE `petugas` (
   `id` int(11) NOT NULL,
-  `users_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `userid` int(11) NOT NULL,
+  `nama` varchar(45) NOT NULL,
+  `alamat` text NOT NULL,
+  `telepon` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `petugas`
+--
+
+INSERT INTO `petugas` (`id`, `userid`, `nama`, `alamat`, `telepon`) VALUES
+(3, 5, 'Bagus Joko Susiloo', 'Tanah Hitam', '082238281801');
 
 -- --------------------------------------------------------
 
@@ -281,6 +291,14 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `role` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`) VALUES
+(1, 'Administrator'),
+(2, 'Petugas');
 
 -- --------------------------------------------------------
 
@@ -294,6 +312,19 @@ CREATE TABLE `rt` (
   `rwid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `rt`
+--
+
+INSERT INTO `rt` (`id`, `rt`, `rwid`) VALUES
+(1, '001', 2),
+(2, '002', 2),
+(3, '003', 2),
+(4, '004', 2),
+(5, '001', 3),
+(6, '002', 3),
+(7, '003', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -305,6 +336,21 @@ CREATE TABLE `rw` (
   `rw` varchar(45) NOT NULL,
   `kelurahansid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `rw`
+--
+
+INSERT INTO `rw` (`id`, `rw`, `kelurahansid`) VALUES
+(2, '001', 1),
+(3, '002', 1),
+(4, '003', 1),
+(5, '004', 1),
+(6, '005', 1),
+(7, '006', 1),
+(8, '001', 3),
+(9, '002', 3),
+(10, '003', 3);
 
 -- --------------------------------------------------------
 
@@ -319,6 +365,13 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(5, 'bagus', '$2y$10$YAH0imG5UosrD4yMry3TKOu/KHC5phEfBewFfPNhR4oMCLpXP.9/C', 'bagus@mail.com');
+
 -- --------------------------------------------------------
 
 --
@@ -331,6 +384,13 @@ CREATE TABLE `usersinroles` (
   `roleid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `usersinroles`
+--
+
+INSERT INTO `usersinroles` (`id`, `userid`, `roleid`) VALUES
+(3, 5, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -340,8 +400,15 @@ CREATE TABLE `usersinroles` (
 CREATE TABLE `wilayahkerja` (
   `id` int(11) NOT NULL,
   `kelurahanid` int(11) NOT NULL,
-  `petugas_id` int(11) NOT NULL
+  `petugasid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wilayahkerja`
+--
+
+INSERT INTO `wilayahkerja` (`id`, `kelurahanid`, `petugasid`) VALUES
+(1, 1, 3);
 
 --
 -- Indexes for dumped tables
@@ -393,7 +460,7 @@ ALTER TABLE `pertanyaan`
 --
 ALTER TABLE `petugas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_petugas_users1_idx` (`users_id`);
+  ADD KEY `fk_petugas_users1_idx` (`userid`);
 
 --
 -- Indexes for table `roles`
@@ -435,7 +502,7 @@ ALTER TABLE `usersinroles`
 ALTER TABLE `wilayahkerja`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_wilayahkerja_kelurahans1_idx` (`kelurahanid`),
-  ADD KEY `fk_wilayahkerja_petugas1_idx` (`petugas_id`);
+  ADD KEY `fk_wilayahkerja_petugas1_idx` (`petugasid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -481,43 +548,43 @@ ALTER TABLE `pertanyaan`
 -- AUTO_INCREMENT for table `petugas`
 --
 ALTER TABLE `petugas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rt`
 --
 ALTER TABLE `rt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `rw`
 --
 ALTER TABLE `rw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `usersinroles`
 --
 ALTER TABLE `usersinroles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `wilayahkerja`
 --
 ALTER TABLE `wilayahkerja`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -552,7 +619,7 @@ ALTER TABLE `penduduk`
 -- Constraints for table `petugas`
 --
 ALTER TABLE `petugas`
-  ADD CONSTRAINT `fk_petugas_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_petugas_users1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `rt`
@@ -578,7 +645,7 @@ ALTER TABLE `usersinroles`
 --
 ALTER TABLE `wilayahkerja`
   ADD CONSTRAINT `fk_wilayahkerja_kelurahans1` FOREIGN KEY (`kelurahanid`) REFERENCES `kelurahans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_wilayahkerja_petugas1` FOREIGN KEY (`petugas_id`) REFERENCES `petugas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_wilayahkerja_petugas1` FOREIGN KEY (`petugasid`) REFERENCES `petugas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class RtModel extends Model
+class WilayahKerjaModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'rt';
+    protected $table            = 'wilayahkerja';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'rt', 'rwid'];
+    protected $allowedFields    = ['id', 'kelurahanid', 'petugasid'];
 
     // Dates
     protected $useTimestamps = false;

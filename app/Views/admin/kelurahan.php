@@ -7,23 +7,23 @@
                 <div ng-class="{'col-md-4':tambah}" ng-hide="!tambah">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Form Kelurahan</h4>
+                            <h4 class="card-title">Form {{titleForm}} Kelurahan</h4>
                             <form class="forms-sample">
                                 <div class="form-group">
                                     <label for="kelurahan">Kelurahan</label>
                                     <input type="text" class="form-control" id="kelurahan" placeholder="Kelurahan"
-                                        ng-model="modelKelurahan.kelurahan">
+                                        ng-model="model.kelurahan">
                                 </div>
                                 <div class="form-group">
                                     <label for="jenis">Jenis Kelurahan</label>
-                                    <select class="form-control" id="jenis" ng-model="modelKelurahan.jenis">
+                                    <select class="form-control" id="jenis" ng-model="model.jenis">
                                         <option value="Kelurahan">Kelurahan</option>
                                         <option value="Desa">Desa</option>
                                         <option value="Kampung">Kampung</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                <button type="button" class="btn btn-light" ng-click="batal()">Cancel</button>
+                                <button type="submit" class="btn btn-primary mr-2">Simpan</button>
+                                <button type="button" class="btn btn-light" ng-click="batal()">Batal</button>
                             </form>
                         </div>
                     </div>
@@ -37,13 +37,13 @@
                                 <button type="button" class="btn btn-primary btn-sm" ng-click="add()">Tambah</button>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-striped table-inverse table-responsive">
+                                <table class="table table-striped table-inverse">
                                     <thead class="thead-inverse">
                                         <tr>
                                             <th>#</th>
                                             <th>Kelurahan</th>
                                             <th>Jenis</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,7 +52,7 @@
                                             <td>{{item.kelurahan}}</td>
                                             <td>{{item.jenis}}</td>
                                             <td class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2">
+                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2" ng-click="edit(item, 'Edit')">
                                                     <i class="mdi mdi-pencil-outline"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-rounded btn-icon mr-2"
@@ -60,7 +60,7 @@
                                                     <i class="mdi mdi-delete-outline"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-success btn-rounded btn-icon"
-                                                    ng-click="detail(item)">
+                                                    ng-click="detailKelurahan(item)">
                                                     <i class="mdi mdi-eye-outline"></i>
                                                 </button>
                                             </td>

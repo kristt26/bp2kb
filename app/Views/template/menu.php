@@ -8,19 +8,31 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<?=base_url('admin/kecamatan')?>">
+                    <i class="mdi mdi-chart-areaspline menu-icon"></i>
+                    <span class="menu-title">Kecamatan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?=base_url('admin/petugas')?>">
+                    <i class="mdi mdi-human-male-female menu-icon"></i>
+                    <span class="menu-title">Petugas</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<?=base_url('penduduk')?>">
                     <i class="mdi mdi-file-document-box menu-icon"></i>
                     <span class="menu-title">Penduduk</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="pages/forms/basic_elements.html" class="nav-link">
                     <i class="mdi mdi-chart-areaspline menu-icon"></i>
                     <span class="menu-title">Form Elements</span>
                     <i class="menu-arrow"></i>
                 </a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="mdi mdi-cube-outline menu-icon"></i>
@@ -56,7 +68,7 @@
                     <i class="menu-arrow"></i>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="mdi mdi-codepen menu-icon"></i>
                     <span class="menu-title">Sample Pages</span>
@@ -80,7 +92,7 @@
                 <a href="docs/documentation.html" class="nav-link">
                     <i class="mdi mdi-file-document-box-outline menu-icon"></i>
                     <span class="menu-title">Documentation</span></a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </nav>

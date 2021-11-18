@@ -3,6 +3,8 @@ angular.module('adminctrl', [])
     .controller('homeController', homeController)
     .controller('kecamatanKontroller', kecamatanKontroller)
     .controller('kelurahanKontroller', kelurahanKontroller)
+    .controller('rwKontroller', rwKontroller)
+    .controller('petugasKontroller', petugasKontroller)
     ;
 
 
@@ -120,11 +122,13 @@ function kecamatanKontroller($scope, kecamatanServices, message, helperServices)
 
     $scope.edit = (item)=>{
         $scope.model = angular.copy(item);
+        $scope.tambah = true;
     }
 
     $scope.add = ()=>{
         $scope.tambah = true;
         $scope.setDetail = false;
+        $scope.model = {};
     }
 
     $scope.batal = ()=>{
@@ -135,8 +139,9 @@ function kecamatanKontroller($scope, kecamatanServices, message, helperServices)
         message.dialog("Ingin Melanjutkan", "Yakin", "Tidak").then(x=>{
             if($scope.model.id){
                 kecamatanServices.put($scope.model).then(res=>{
-                    $scope.info("Proses Berhasil");
+                    message.info("Proses Berhasil");
                     $scope.model = {};
+                    $scope.tambah = false;
                 })
             }else{
                 kecamatanServices.post($scope.model).then(res=>{
@@ -163,17 +168,20 @@ function kecamatanKontroller($scope, kecamatanServices, message, helperServices)
 }
 
 function kelurahanKontroller($scope, kelurahanServices, message, helperServices) {
-    $scope.$emit("SendUp", "Kecamatan ");
+    $scope.$emit("SendUp", "Kelurahan");
     $scope.datas = [];
     $scope.model = {};
     $scope.modelKelurahan = {};
+    $scope.titleForm = "Tambah";
     const urlParams = new URLSearchParams(window.location.search);
     kelurahanServices.get(urlParams.get('kecamatanid')).then(res=>{
         $scope.datas = res;
     })
 
-    $scope.edit = (item)=>{
+    $scope.edit = (item, set)=>{
         $scope.model = angular.copy(item);
+        $scope.titleForm = set;
+        $scope.tambah = true;
     }
 
     $scope.add = ()=>{
@@ -183,6 +191,7 @@ function kelurahanKontroller($scope, kelurahanServices, message, helperServices)
 
     $scope.batal = ()=>{
         $scope.tambah = false;
+        $scope.titleForm = "Tambah";
     }
 
     $scope.save = ()=>{
@@ -211,7 +220,161 @@ function kelurahanKontroller($scope, kelurahanServices, message, helperServices)
         })
     }
 
-    $scope.detailKecamatan = (item)=>{
-        document.location.href = helperServices.url + "admin/kelurahan?id=" + item.id
+    $scope.detailKelurahan = (item)=>{
+        document.location.href = helperServices.url + "admin/rw?kelurahanid=" + item.id
+    }
+}
+
+function rwKontroller($scope, rwServices, message, helperServices) {
+    $scope.$emit("SendUp", "Kelurahan");
+    $scope.datas = [];
+    $scope.datasRt = [];
+    $scope.model = {};
+    $scope.modelRt = {};
+    $scope.titleForm = "Tambah";
+    $scope.titleFormRt = "Tambah";
+    const urlParams = new URLSearchParams(window.location.search);
+    rwServices.get(urlParams.get('kelurahanid')).then(res=>{
+        $scope.datas = res;
+    })
+
+    $scope.edit = (item, set)=>{
+        $scope.model = angular.copy(item);
+        $scope.titleForm = set;
+        $scope.tambah = true;
+    }
+
+    $scope.add = ()=>{
+        $scope.tambah = true;
+        $scope.setDetail = false;
+    }
+
+    $scope.batal = ()=>{
+        $scope.tambah = false;
+        $scope.titleForm = "Tambah";
+    }
+
+    $scope.save = ()=>{
+        message.dialog("Ingin Melanjutkan", "Yakin", "Tidak").then(x=>{
+            if($scope.model.id){
+                rwServices.put($scope.model).then(res=>{
+                    $scope.info("Proses Berhasil");
+                    $scope.model = {};
+                })
+            }else{
+                $scope.model.kelurahansid = urlParams.get('kelurahanid');
+                rwServices.post($scope.model).then(res=>{
+                    message.info("Proses Berhasil");
+                    $scope.model = {};
+                    $scope.tambah = false;
+                })
+            }
+        })
+    }
+    $scope.saveRt = ()=>{
+        message.dialog("Ingin Melanjutkan", "Yakin", "Tidak").then(x=>{
+            if($scope.modelRt.id){
+                rwServices.putRt($scope.modelRt).then(res=>{
+                    $scope.info("Proses Berhasil");
+                    $scope.modelRt = {};
+                })
+            }else{
+                $scope.modelRt.rwid = angular.copy($scope.rwid);
+                rwServices.postRt($scope.modelRt).then(res=>{
+                    message.info("Proses Berhasil");
+                    $scope.modelRt = {};
+                    $scope.tambah = false;
+                })
+            }
+        })
+    }
+
+    $scope.hapus = (item)=>{
+        message.dialog("Ingin menghapus", "Ya", "Tidak").then(x=>{
+            rwServices.deleted(item).then(res=>{
+                message.info("Berhasil menghapus data");
+
+            })
+        })
+    }
+
+    $scope.hapusRt = (item)=>{
+        message.dialog("Ingin menghapus", "Ya", "Tidak").then(x=>{
+            rwServices.deletedRt(item).then(res=>{
+                message.info("Berhasil menghapus data");
+
+            })
+        })
+    }
+
+    $scope.detailRt = (item)=>{
+        $scope.tambah = false;
+        $scope.setDetail = true;
+        $scope.datasRt = item.rt
+        $scope.rwid = angular.copy(item.id);
+    }
+}
+
+function petugasKontroller($scope, petugasServices, message, helperServices) {
+    $scope.$emit("SendUp", "Petugas");
+    $scope.datas = [];
+    $scope.kecamatans = {};
+    $scope.wilayah = {};
+    $scope.model = {};
+    $scope.modelRt = {};
+    $scope.titleForm = "Tambah";
+    $scope.titleFormRt = "Tambah";
+    petugasServices.get().then(res=>{
+        $scope.datas = res;
+        $scope.datas.kecamatan.forEach(kecamatan => {
+            kecamatan.kelurahan = $scope.datas.kelurahan.filter(x=>x.kecamatanid==kecamatan.id);
+        });
+    })
+
+    $scope.edit = (item, set)=>{
+        var kel = angular.copy($scope.datas.kelurahan.find(x=>x.id ==item.kelurahanid));
+        var kec = angular.copy($scope.datas.kecamatan.find(x=>x.id == kel.kecamatanid))
+        $scope.kecamatans = kec;
+        $scope.wilayah = kec.kelurahan.find(x=>x.id==item.kelurahanid);
+        $scope.model = angular.copy(item);
+        $scope.titleForm = set;
+        $scope.tambah = true;
+    }
+
+    $scope.add = ()=>{
+        $scope.tambah = true;
+        $scope.setDetail = false;
+    }
+
+    $scope.batal = ()=>{
+        $scope.tambah = false;
+        $scope.titleForm = "Tambah";
+    }
+
+    $scope.save = ()=>{
+        message.dialog("Ingin Melanjutkan", "Yakin", "Tidak").then(x=>{
+            if($scope.model.id){
+                petugasServices.put($scope.model).then(res=>{
+                    message.info("Proses Berhasil");
+                    $scope.model = {};
+                    $scope.tambah = false;
+                })
+            }else{
+                petugasServices.post($scope.model).then(res=>{
+                    message.info("Proses Berhasil");
+                    $scope.model = {};
+                    $scope.tambah = false;
+                })
+            }
+        })
+    }
+
+    $scope.hapus = (item)=>{
+        message.dialog("Ingin menghapus", "Ya", "Tidak").then(x=>{
+            petugasServices.deleted(item).then(res=>{
+                message.info("Berhasil menghapus data");
+
+            })
+        })
     }
 }

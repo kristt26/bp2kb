@@ -35,12 +35,15 @@ angular.module('apps', [
     .directive('emaudio', emaudio)
     ;
 
-function indexController($scope) {
+function indexController($scope, AuthService) {
     $scope.titleHeader = "PTC";
     $scope.header = "";
     $scope.breadcrumb = "";
     $scope.title;
     $scope.warning = 0;
+    AuthService.userIsLogin().then(res=>{
+        console.log(res);
+    })
     $scope.$on("SendUp", function (evt, data) {
         $scope.header = data;
         $scope.header = data;

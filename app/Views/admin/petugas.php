@@ -8,19 +8,21 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Form {{titleForm}} Petugas</h4>
-                            <form class="forms-sample" ng-submit = "save()">
+                            <form class="forms-sample" ng-submit="save()">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label col-form-label-sm" for="namaPetugas">Nama</label>
+                                    <label class="col-sm-3 col-form-label col-form-label-sm"
+                                        for="namaPetugas">Nama</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control  form-control-sm" id="namaPetugas" placeholder="Nama Petugas"
-                                            ng-model="model.nama">
+                                        <input type="text" class="form-control  form-control-sm" id="namaPetugas"
+                                            placeholder="Nama Petugas" ng-model="model.nama">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label col-form-label-sm" for="telepon">Telepon</label>
+                                    <label class="col-sm-3 col-form-label col-form-label-sm"
+                                        for="telepon">Telepon</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control  form-control-sm" id="telepon" placeholder="Telepon"
-                                            ng-model="model.telepon">
+                                        <input type="text" class="form-control  form-control-sm" id="telepon"
+                                            placeholder="Telepon" ng-model="model.telepon">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -33,46 +35,52 @@
                                 <div class="form-group row" ng-show="!model.id">
                                     <label class="col-sm-3 col-form-label col-form-label-sm" for="email">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="email" class="form-control  form-control-sm" id="email" placeholder="Email"
-                                            ng-model="model.email">
+                                        <input type="email" class="form-control  form-control-sm" id="email"
+                                            placeholder="Email" ng-model="model.email">
                                     </div>
                                 </div>
                                 <div class="form-group row" ng-show="!model.id">
-                                    <label class="col-sm-3 col-form-label col-form-label-sm" for="username">Username</label>
+                                    <label class="col-sm-3 col-form-label col-form-label-sm"
+                                        for="username">Username</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control  form-control-sm" id="username" placeholder="Username"
-                                            ng-model="model.username">
+                                        <input type="text" class="form-control  form-control-sm" id="username"
+                                            placeholder="Username" ng-model="model.username">
                                     </div>
                                 </div>
                                 <div class="form-group row" ng-show="!model.id">
-                                    <label class="col-sm-3 col-form-label col-form-label-sm" for="password">Password</label>
+                                    <label class="col-sm-3 col-form-label col-form-label-sm"
+                                        for="password">Password</label>
                                     <div class="col-sm-9">
-                                        <input type="password" class="form-control  form-control-sm" id="password" placeholder="Password"
-                                            ng-model="model.password">
+                                        <input type="password" class="form-control  form-control-sm" id="password"
+                                            placeholder="Password" ng-model="model.password">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label col-form-label-sm"><strong>Wilayah Kerja</strong></label>
+                                    <label class="col-sm-3 col-form-label col-form-label-sm"><strong>Wilayah
+                                            Kerja</strong></label>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label col-form-label-sm" for="wilayah">Kecamatan</label>
+                                    <label class="col-sm-3 col-form-label col-form-label-sm"
+                                        for="kecamatan">Kecamatan</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control  form-control-sm" id="wilayah"
+                                        <select class="form-control  form-control-sm" id="kecamatan"
                                             ng-options="item as item.kecamatan for item in datas.kecamatan track by item.id"
                                             ng-model="kecamatans" ng-disabled="model.id">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label col-form-label-sm" for="wilayah">Kecamatan</label>
+                                    <label class="col-sm-3 col-form-label col-form-label-sm"
+                                        for="wilayah">Kelurahan</label>
                                     <div class="col-sm-9">
                                         <select class="form-control  form-control-sm" id="wilayah"
                                             ng-options="item as item.kelurahan for item in kecamatans.kelurahan track by item.id"
-                                            ng-model="wilayah" ng-change="model.kelurahanid=wilayah.id"  ng-disabled="model.id">
+                                            ng-model="wilayah" ng-change="model.kelurahanid=wilayah.id"
+                                            ng-disabled="model.id">
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <button type="submit" class="btn btn-primary mr-2">Simpan</button>
                                 <button type="button" class="btn btn-light" ng-click="batal()">Batal</button>
                             </form>

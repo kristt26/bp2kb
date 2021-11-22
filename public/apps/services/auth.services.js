@@ -17,7 +17,7 @@ function AuthService($http, $q, helperServices) {
         // logOff: logoff,
         // userIsLogin: userIsLogin,
         // getUserName: getUserName,
-        // userIsLogin: userIsLogin,
+        userIsLogin: userIsLogin,
         // userInRole: userInRole,
         getHeader: getHeader,
         // getToken: getToken,
@@ -91,12 +91,22 @@ function AuthService($http, $q, helperServices) {
     //     }
     // }
 
-    // function userIsLogin() {
-    //     var result = StorageService.getObject("user");
-    //     if (result) {
-    //         return true;
-    //     }
-    // }
+    function userIsLogin() {
+        var def = $q.defer();
+        $http({
+            method: 'GET',
+            url: helperServices.url + "/auth/checklogin",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            def.resolve(res.data);
+        }, err => {
+            def.reject(err);
+            document.location.href = helperServices.url;
+        });
+        return def.promise;
+    }
 
     // function userInRole(role) {
     //     var result = StorageService.getItem("user");

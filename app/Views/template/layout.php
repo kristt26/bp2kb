@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../assets/vendors/base/vendor.bundle.base.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
+    <link href="https://code.jquery.com/ui/1.13.0/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
     <style>
     .rotate {
         transition: all 0.3s ease-in-out;
@@ -23,10 +25,10 @@
                 <div class="container-fluid">
                     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-between">
                         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                            <a class="navbar-brand brand-logo" href="index.html"><img src="../assets/images/logo.svg"
+                            <a class="navbar-brand brand-logo" href="index.html"><img src="../assets/images/logo.png"
                                     alt="logo" /></a>
                             <a class="navbar-brand brand-logo-mini" href="index.html"><img
-                                    src="../assets/images/logo-mini.svg" alt="logo" /></a>
+                                    src="../assets/images/logo.png" alt="logo" /></a>
                         </div>
                         <ul class="navbar-nav navbar-nav-right">
                             <li class="nav-item dropdown  d-lg-flex d-none">
@@ -66,7 +68,7 @@
                                         <i class="mdi mdi-settings text-primary"></i>
                                         Settings
                                     </a>
-                                    <a class="dropdown-item">
+                                    <a href="<?=base_url('auth/logout')?>" class="dropdown-item">
                                         <i class="mdi mdi-logout text-primary"></i>
                                         Logout
                                     </a>
@@ -150,7 +152,7 @@
     <script src="../assets/vendors/chartjs-plugin-datalabels/chartjs-plugin-datalabels.js"></script>
     <script src="../assets/vendors/justgage/raphael-2.1.4.min.js"></script>
     <script src="../assets/vendors/justgage/justgage.js"></script>
-    <script src="../assets/js/dashboard.js"></script>
+    <!-- <script src="../assets/js/dashboard.js"></script> -->
 
     <script src="../apps/apps.js"></script>
     <script src="../apps/controllers/admin.controllers.js"></script>
@@ -174,6 +176,113 @@
     <script src="../assets/libs/angularjs-currency-input-mask/dist/angularjs-currency-input-mask.min.js">
     </script>
     <script src="../assets/libs/jquery.PrintArea.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <!-- <script src="../assets/js/script.js"></script> -->
+
+    <!-- Javascript -->
+    <script>
+    $(function() {
+        $("#datepicker").datepicker({
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+    });
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var left, opacity, scale; //fieldset properties which we will animate
+    var animating; //flag to prevent quick multi-click glitches
+
+    $(".next").click(function() {
+        if (animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();
+
+        //activate next step on progressbar using the index of next_fs
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({
+            opacity: 0
+        }, {
+            step: function(now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale current_fs down to 80%
+                scale = 1 - (1 - now) * 0.2;
+                //2. bring next_fs from the right(50%)
+                left = (now * 50) + "%";
+                //3. increase opacity of next_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({
+                    'transform': 'scale(' + scale + ')',
+                    'position': 'absolute'
+                });
+                next_fs.css({
+                    'left': left,
+                    'opacity': opacity
+                });
+            },
+            duration: 800,
+            complete: function() {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".previous").click(function() {
+        if (animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        previous_fs = $(this).parent().prev();
+
+        //de-activate current step on progressbar
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+        //show the previous fieldset
+        previous_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({
+            opacity: 0
+        }, {
+            step: function(now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale previous_fs from 80% to 100%
+                scale = 0.8 + (1 - now) * 0.2;
+                //2. take current_fs to the right(50%) - from 0%
+                left = ((1 - now) * 50) + "%";
+                //3. increase opacity of previous_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({
+                    'left': left
+                });
+                previous_fs.css({
+                    'transform': 'scale(' + scale + ')',
+                    'opacity': opacity
+                });
+            },
+            duration: 800,
+            complete: function() {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".submit").click(function() {
+        return false;
+    })
+    </script>
 </body>
 
 </html>

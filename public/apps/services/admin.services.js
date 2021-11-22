@@ -5,6 +5,8 @@ angular.module('admin.service', [])
     .factory('kelurahanServices', kelurahanServices)
     .factory('rwServices', rwServices)
     .factory('petugasServices', petugasServices)
+    .factory('pendudukServices', pendudukServices)
+    .factory('kuesionerServices', kuesionerServices)
     ;
 
 
@@ -510,6 +512,194 @@ function petugasServices($http, $q, helperServices, AuthService, message) {
         }).then(
             (res) => {
                 service.data.petugas.push(res.data);
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+    function put(param) {
+        var item = { nama: param.nama, telepon: param.telepon, alamat: param.alamat};
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + "/put/" + param.id,
+            data: item,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                var data = service.data.petugas.find(x => x.id == param.id);
+                if (data) {
+                    data.nama = param.nama;
+                    data.telepon = param.telepon;
+                    data.alamat = param.alamat;
+                }
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+    function deleted(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + "/delete/" + param.id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                var index = service.data.indexOf(param);
+                service.data.splice(index, 1);
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+}
+
+function pendudukServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'petugas/penduduk';
+    var service = {};
+    service.data = [];
+    return {
+        get: get, 
+        post: post, 
+        put: put, 
+        deleted: deleted
+    };
+
+    function get(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + "/read/" + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+    function post(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + "/post",
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data.petugas.push(res.data);
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+    function put(param) {
+        var item = { nama: param.nama, telepon: param.telepon, alamat: param.alamat};
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + "/put/" + param.id,
+            data: item,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                var data = service.data.petugas.find(x => x.id == param.id);
+                if (data) {
+                    data.nama = param.nama;
+                    data.telepon = param.telepon;
+                    data.alamat = param.alamat;
+                }
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+    function deleted(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + "/delete/" + param.id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                var index = service.data.indexOf(param);
+                service.data.splice(index, 1);
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+}
+
+function kuesionerServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'admin/kuesioner';
+    var service = {};
+    service.data = [];
+    return {
+        get: get, 
+        post: post, 
+        put: put, 
+        deleted: deleted
+    };
+
+    function get(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + "/read/" + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+    function post(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + "/post",
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data.push(res.data);
                 def.resolve(res.data);
             },
             (err) => {

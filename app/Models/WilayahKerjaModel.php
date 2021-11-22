@@ -39,4 +39,24 @@ class WilayahKerjaModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getWilayah($petugasid)
+    {
+        $db = \Config\Database::connect();
+        try {
+            $data = $db->query("SELECT
+                `wilayahkerja`.`id` AS `wilayahid`,
+                `wilayahkerja`.`kelurahanid`,
+                `kelurahans`.`kelurahan`,
+                `kelurahans`.`kecamatanid`,
+                `kecamatans`.`kecamatan`
+            FROM
+                `wilayahkerja`
+                LEFT JOIN `kelurahans` ON `wilayahkerja`.`kelurahanid` = `kelurahans`.`id`
+                LEFT JOIN `kecamatans` ON `kelurahans`.`kecamatanid` = `kecamatans`.`id` WHERE petugasid='$petugasid'")->getRowObject();
+            return $data;
+        } catch (\Throwable $th) {
+            return $db->error();
+        }
+    }
 }

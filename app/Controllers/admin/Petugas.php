@@ -25,6 +25,8 @@ class Petugas extends ResourceController
         $this->kecamatan = new \App\Models\KecamatanModel();
         $this->wilayah = new \App\Models\WilayahKerjaModel();
         $this->db = \Config\Database::connect();
+        $this->encrypter = \Config\Services::encrypter();
+
     }
 
     public function index()
@@ -47,7 +49,7 @@ class Petugas extends ResourceController
         $this->db->transBegin();
         $user = [
             "username"=>$data->username,
-            "password"=>password_hash($data->password, PASSWORD_DEFAULT),
+            "password"=>base64_encode($this->encrypter->encrypt($data->password)),
             "email"=>$data->email,
         ];
         $this->user->insert($user);

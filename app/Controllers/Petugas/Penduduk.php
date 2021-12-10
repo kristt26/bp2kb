@@ -14,22 +14,37 @@ class Penduduk extends ResourceController
     protected $rw;
     protected $rt;
     protected $db;
+    protected $keluarga;
+    protected $jawaban;
 
     public function __construct()
     {
         $this->kelurahan = new \App\Models\KelurahanModel();
         $this->kecamatan = new \App\Models\KecamatanModel();
         $this->wilayah = new \App\Models\WilayahKerjaModel();
+        $this->pertanyaan = new \App\Models\KuesionerModel();
+        $this->sub = new \App\Models\SubPertanyaanModel();
         $this->rw = new \App\Models\RwModel();
         $this->rt = new \App\Models\RtModel();
         $this->db = \Config\Database::connect();
         $this->encrypter = \Config\Services::encrypter();
-
+        $this->keluarga = new \App\Models\KeluargaModel();
+        $this->jawaban = new \App\Models\JawabanModel();
     }
 
     public function index()
     {
         return view('petugas/penduduk');
+    }
+    
+    public function get($id=null)
+    {
+        $penduduk = $this->model->where('keluargaid', $id)->get()->getResult();
+        foreach ($penduduk as $key => $value) {
+            $value->hubungan_keluarga = unserialize($value->hubungan_keluarga);
+            isset($value->ibu_kandung) ? $value->ibu_kandung = unserialize($value->ibu_kandung): " ";
+        }
+        return $this->respond($penduduk);
     }
 
     public function read()
@@ -39,6 +54,21 @@ class Penduduk extends ResourceController
         foreach ($result['kelurahan']->rw as $key => $rw) {
             $rw->rt = $this->rt->where('rwid', $rw->id)->findAll();
         }
+        $result['pertanyaan'] = $this->pertanyaan->get()->getResultObject();
+        foreach ($result['pertanyaan'] as $key => $value) {
+            $value->opsi = unserialize($value->opsi);
+            if($value->sub_status==1){
+                $value->subPertanyaan = $this->sub->where('pertanyaan_id', $value->id)->get()->getResultObject();
+                foreach ($value->subPertanyaan as $key => $sub) {
+                    $sub->opsi = unserialize($sub->opsi);
+                }
+            }
+        }
+        $result['penduduk'] = $this->keluarga->getKeluarga();
+        foreach ($result['penduduk'] as $key => $keluarga) {
+            $keluarga->pertanyaan = unserialize($keluarga->pertanyaan);
+        }
+        $result['kecamatan'] = $this->kecamatan->find(session()->get('kecamatanid'));
         return $this->respond($result);
     }
 
@@ -46,31 +76,20 @@ class Penduduk extends ResourceController
     {
         $data = $this->request->getJSON();
         $this->db->transBegin();
-        $user = [
-            "username" => $data->username,
-            "password" => base64_encode($this->encrypter->encrypt($data->password)),
-            "email" => $data->email,
+        $this->keluarga->insert($data);
+        $data->id = $this->keluarga->getInsertID();
+        foreach ($data->penduduk as $key => $penduduk) {
+            $penduduk->keluargaid = $data->id;
+            $penduduk->hubungan_keluarga = serialize($penduduk->hubungan_keluarga);
+            isset($penduduk->ibu_kandung) ? $penduduk->ibu_kandung = serialize($penduduk->ibu_kandung): " ";
+            $penduduk->tanggal_lahir = substr($penduduk->tanggal_lahir,0,10);
+            $this->model->insert($penduduk);
+        }
+        $jawaban = [
+            'jawaban'=> serialize($data->pertanyaan),
+            'keluargaid'=> $data->id
         ];
-        $this->user->insert($user);
-        $data->userid = $this->user->getInsertID();
-        $userrole = [
-            "userid" => $data->userid,
-            "roleid" => "2",
-        ];
-        $this->userinrole->insert($userrole);
-        $petugas = [
-            "userid" => $data->userid,
-            "nama" => $data->nama,
-            "alamat" => $data->alamat,
-            "telepon" => $data->telepon,
-        ];
-        $this->model->insert($petugas);
-        $data->id = $this->model->getInsertID();
-        $wilayah = [
-            'petugasid' => $data->id,
-            'kelurahanid' => $data->kelurahanid,
-        ];
-        $this->wilayah->insert($wilayah);
+        $this->jawaban->insert($jawaban);
         if ($this->db->transStatus()) {
             $this->db->transCommit();
             return $this->respondCreated($data);
@@ -88,7 +107,7 @@ class Penduduk extends ResourceController
     }
     public function delete($id = null)
     {
-        $result = $this->model->delete($id);
+        $result = $this->keluarga->delete($id);
         return $this->respond($result);
     }
 }

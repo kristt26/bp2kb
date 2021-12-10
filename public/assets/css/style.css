@@ -20902,10 +20902,11 @@ code {
 select.form-control, select.typeahead,
 select.tt-query,
 select.tt-hint {
-  padding: .88rem .75rem;
-  border: 0;
+  padding: .9rem .55rem;
+  border: 1;
   outline: 1px solid #f1f6f8;
-  color: #c9c8c8;
+  color: #000;
+  font-size: 18px !important;
 }
 
 select.form-control:focus, select.typeahead:focus,
@@ -22559,8 +22560,8 @@ dl li {
   position: relative;
   width: 100%;
   z-index: 99;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
+  /* -webkit-justify-content: space-between; */
+  justify-content: center;
   -webkit-transition-duration: 0.2s;
   -moz-transition-duration: 0.2s;
   -o-transition-duration: 0.2s;
@@ -23022,12 +23023,13 @@ body {
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
     padding: 20px 30px;
     box-sizing: border-box;
-    width: 80%;
-    margin: 0 10%;
+    width: 100%;
+    margin: 0 0;
 
     /*stacking fieldsets above each other*/
     position: relative;
 }
+
 
 /*Hide all except first fieldset*/
 #msform fieldset:not(:first-of-type) {
@@ -23036,15 +23038,15 @@ body {
 
 /*inputs*/
 #msform input, #msform textarea {
-    padding: 15px;
+    padding: .9rem;
     border: 1px solid #ccc;
     border-radius: 0px;
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
-    font-family: montserrat;
+    /* font-family: montserrat; */
     color: #2C3E50;
-    font-size: 13px;
+    font-size: 19px !important;
 }
 
 #msform input:focus, #msform textarea:focus {

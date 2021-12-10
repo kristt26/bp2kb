@@ -32,7 +32,7 @@
                                     <label class="col-sm-3 col-form-label col-form-label-sm" for="telepon">Set
                                         Jawaban</label>
                                     <div class="col-sm-9">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-12">
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" name="setJawaban"
@@ -41,7 +41,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-12">
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" name="setJawaban"
@@ -51,7 +51,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-12">
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" name="setJawaban"
@@ -61,7 +61,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-12">
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" name="setJawaban"
@@ -161,7 +161,7 @@
                                     <label class="col-sm-3 col-form-label col-form-label-sm" for="telepon">Sub
                                         Pertanyaan</label>
                                     <div class="col-sm-9">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-12">
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" name="membershipRadios"
@@ -294,7 +294,7 @@
                                 <label class="col-sm-3 col-form-label col-form-label-sm">Set
                                     Jawaban</label>
                                 <div class="col-sm-9">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-12">
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input type="radio" class="form-check-input" name="setJawabanSub"
@@ -303,7 +303,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-12">
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input type="radio" class="form-check-input" name="setJawabanSub"
@@ -313,7 +313,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-12">
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input type="radio" class="form-check-input" name="setJawabanSub"
@@ -323,7 +323,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-12">
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input type="radio" class="form-check-input" name="setJawabanSub"

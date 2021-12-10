@@ -1,4 +1,5 @@
 angular.module('apps', [
+    'ngAnimate',
     'adminctrl',
     'helper.service',
     'admin.service',
@@ -9,6 +10,7 @@ angular.module('apps', [
     'ngLocale',
     'datatables',
     'cur.$mask',
+    'angular-steps'
     // 'ngSanitize'
 
 ])
@@ -16,6 +18,21 @@ angular.module('apps', [
         $rootScope.typeOf = function (value) {
             return typeof value;
         };
+    })
+
+    .directive('multiswitchWhen', function () {
+        return {
+            transclude: 'element',
+            priority: 800,
+            require: '^ngSwitch',
+            link: function (scope, element, attrs, ctrl, $transclude) {
+                var selectTransclude = { transclude: $transclude, element: element };
+                angular.forEach(attrs.multiswitchWhen.split('|'), function (switchWhen) {
+                    ctrl.cases['!' + switchWhen] = (ctrl.cases['!' + switchWhen] || []);
+                    ctrl.cases['!' + switchWhen].push(selectTransclude);
+                });
+            }
+        }
     })
 
     .directive('stringToNumber', function () {
@@ -41,7 +58,7 @@ function indexController($scope, AuthService) {
     $scope.breadcrumb = "";
     $scope.title;
     $scope.warning = 0;
-    AuthService.userIsLogin().then(res=>{
+    AuthService.userIsLogin().then(res => {
         console.log(res);
     })
     $scope.$on("SendUp", function (evt, data) {

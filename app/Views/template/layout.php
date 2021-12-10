@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="apps">
+<html lang="en" ng-app="apps" id="testing">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Kapella Bootstrap Admin Dashboard Template</title>
+    <title>BP2KB</title>
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../assets/vendors/base/vendor.bundle.base.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
     <link href="https://code.jquery.com/ui/1.13.0/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <link href="../assets/vendors/select2/select2.min.css" rel="stylesheet">
+    <link href="../assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/libs/angular/angular-steps.css" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet"> -->
+    <!-- <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 
     <style>
     .rotate {
@@ -31,7 +37,7 @@
                                     src="../assets/images/logo.png" alt="logo" /></a>
                         </div>
                         <ul class="navbar-nav navbar-nav-right">
-                            <li class="nav-item dropdown  d-lg-flex d-none">
+                            <!-- <li class="nav-item dropdown  d-lg-flex d-none">
                                 <button type="button" class="btn btn-inverse-primary btn-sm">Product </button>
                             </li>
                             <li class="nav-item dropdown d-lg-flex d-none">
@@ -51,16 +57,16 @@
                                         Exel
                                     </a>
                                 </div>
-                            </li>
-                            <li class="nav-item dropdown d-lg-flex d-none">
+                            </li> -->
+                            <!-- <li class="nav-item dropdown d-lg-flex d-none">
                                 <button type="button" class="btn btn-inverse-primary btn-sm">Settings</button>
-                            </li>
+                            </li> -->
                             <li class="nav-item nav-profile dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                                     id="profileDropdown">
-                                    <span class="nav-profile-name">Johnson</span>
+                                    <span class="nav-profile-name"><?= session()->get('nama')?></span>
                                     <span class="online-status"></span>
-                                    <img src="../assets/images/faces/face28.png" alt="profile" />
+                                    <img src="../assets/images/user.png" alt="profile" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                                     aria-labelledby="profileDropdown">
@@ -87,7 +93,7 @@
         <div class="container-fluid page-body-wrapper">
             <div class="main-panel">
                 <div class="content-wrapper">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-sm-6 mb-4 mb-xl-0">
                             <div class="d-lg-flex align-items-center">
                                 <div>
@@ -95,29 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-6">
-                            <div class="d-flex align-items-center justify-content-md-end">
-                                <div class="pr-1 mb-3 mb-xl-0">
-                                    <button type="button" class="btn btn-outline-inverse-info btn-icon-text">
-                                        Feedback
-                                        <i class="mdi mdi-message-outline btn-icon-append"></i>
-                                    </button>
-                                </div>
-                                <div class="pr-1 mb-3 mb-xl-0">
-                                    <button type="button" class="btn btn-outline-inverse-info btn-icon-text">
-                                        Help
-                                        <i class="mdi mdi-help-circle-outline btn-icon-append"></i>
-                                    </button>
-                                </div>
-                                <div class="pr-1 mb-3 mb-xl-0">
-                                    <button type="button" class="btn btn-outline-inverse-info btn-icon-text">
-                                        Print
-                                        <i class="mdi mdi-printer btn-icon-append"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
+                    </div> -->
                     <div class="row mt-4">
                         <div class="col-lg-12 stretch-card">
                             <?=$this->renderSection('content')?>
@@ -129,10 +113,10 @@
                     <div class="footer-wrap">
                         <div class="d-sm-flex justify-content-center justify-content-sm-between">
                             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-                                bootstrapdash.com 2020</span>
-                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
+                                BP2KB 2021</span>
+                            <!-- <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
                                     href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard
-                                    templates</a> from Bootstrapdash.com</span>
+                                    templates</a> from Bootstrapdash.com</span> -->
                         </div>
                     </div>
                 </footer>
@@ -144,14 +128,18 @@
     </div>
 
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/angular/angular.js"></script>
     <script src="../assets/vendors/base/vendor.bundle.base.js"></script>
+    <script src="../assets/libs/angular/angular.js"></script>
+    <script src="../assets/libs/angular/angular-animate.min.js"></script>
+    <script src="../assets/libs/angular/angular-steps.js"></script>
     <script src="../assets/js/template.js"></script>
     <script src="../assets/vendors/chart.js/Chart.min.js"></script>
     <script src="../assets/vendors/progressbar.js/progressbar.min.js"></script>
     <script src="../assets/vendors/chartjs-plugin-datalabels/chartjs-plugin-datalabels.js"></script>
     <script src="../assets/vendors/justgage/raphael-2.1.4.min.js"></script>
     <script src="../assets/vendors/justgage/justgage.js"></script>
+    <script src="../assets/vendors/select2/select2.min.js"></script>
+    <!-- <script src="../assets/vendors/datatables/jquery.dataTables.min.js"></script> -->
     <!-- <script src="../assets/js/dashboard.js"></script> -->
 
     <script src="../apps/apps.js"></script>
@@ -164,7 +152,7 @@
     <script src="../apps/services/message.services.js"></script>
     <script src="../assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="../assets/libs/swangular/swangular.js"></script>
-    <script src="../assets/libs/datatables/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="../assets/libs/angular-datatables/dist/angular-datatables.min.js"></script>
     <script src="../assets/libs/angular-locale_id-id.js"></script>
     <script src="../assets/libs/input-mask/angular-input-masks-standalone.min.js"></script>
@@ -177,7 +165,9 @@
     </script>
     <script src="../assets/libs/jquery.PrintArea.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <!-- <script src="../assets/js/script.js"></script> -->
+    <script src="../assets/js/select2.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Javascript -->
     <script>
@@ -190,98 +180,21 @@
             selectOtherMonths: true
         });
     });
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var left, opacity, scale; //fieldset properties which we will animate
-    var animating; //flag to prevent quick multi-click glitches
+    // var current_fs, next_fs, previous_fs; //fieldsets
+    // var left, opacity, scale; //fieldset properties which we will animate
+    // var animating; //flag to prevent quick multi-click glitches
 
-    $(".next").click(function() {
-        if (animating) return false;
-        animating = true;
+    // $(".next").click(function() {
 
-        current_fs = $(this).parent();
-        next_fs = $(this).parent().next();
+    // });
 
-        //activate next step on progressbar using the index of next_fs
-        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+    // $(".previous").click(function() {
 
-        //show the next fieldset
-        next_fs.show();
-        //hide the current fieldset with style
-        current_fs.animate({
-            opacity: 0
-        }, {
-            step: function(now, mx) {
-                //as the opacity of current_fs reduces to 0 - stored in "now"
-                //1. scale current_fs down to 80%
-                scale = 1 - (1 - now) * 0.2;
-                //2. bring next_fs from the right(50%)
-                left = (now * 50) + "%";
-                //3. increase opacity of next_fs to 1 as it moves in
-                opacity = 1 - now;
-                current_fs.css({
-                    'transform': 'scale(' + scale + ')',
-                    'position': 'absolute'
-                });
-                next_fs.css({
-                    'left': left,
-                    'opacity': opacity
-                });
-            },
-            duration: 800,
-            complete: function() {
-                current_fs.hide();
-                animating = false;
-            },
-            //this comes from the custom easing plugin
-            easing: 'easeInOutBack'
-        });
-    });
+    // });
 
-    $(".previous").click(function() {
-        if (animating) return false;
-        animating = true;
-
-        current_fs = $(this).parent();
-        previous_fs = $(this).parent().prev();
-
-        //de-activate current step on progressbar
-        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
-        //show the previous fieldset
-        previous_fs.show();
-        //hide the current fieldset with style
-        current_fs.animate({
-            opacity: 0
-        }, {
-            step: function(now, mx) {
-                //as the opacity of current_fs reduces to 0 - stored in "now"
-                //1. scale previous_fs from 80% to 100%
-                scale = 0.8 + (1 - now) * 0.2;
-                //2. take current_fs to the right(50%) - from 0%
-                left = ((1 - now) * 50) + "%";
-                //3. increase opacity of previous_fs to 1 as it moves in
-                opacity = 1 - now;
-                current_fs.css({
-                    'left': left
-                });
-                previous_fs.css({
-                    'transform': 'scale(' + scale + ')',
-                    'opacity': opacity
-                });
-            },
-            duration: 800,
-            complete: function() {
-                current_fs.hide();
-                animating = false;
-            },
-            //this comes from the custom easing plugin
-            easing: 'easeInOutBack'
-        });
-    });
-
-    $(".submit").click(function() {
-        return false;
-    })
+    // $(".submit").click(function() {
+    //     return false;
+    // })
     </script>
 </body>
 

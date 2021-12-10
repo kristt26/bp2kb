@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use CodeIgniter\RESTful\ResourceController;
+use App\Models\SubPertanyaanModel;
 
 class Kuesioner extends ResourceController
 {
@@ -16,6 +17,7 @@ class Kuesioner extends ResourceController
         $this->db = \Config\Database::connect();
         $this->sub = new \App\Models\SubPertanyaanModel();
         $this->encrypter = \Config\Services::encrypter();
+        $this->sub = new SubPertanyaanModel();
 
     }
 
@@ -26,7 +28,16 @@ class Kuesioner extends ResourceController
 
     public function read()
     {
-        $result = $this->model->findAll();
+        $result = $this->model->get()->getResultObject();
+        foreach ($result as $key => $value) {
+            $value->opsi = unserialize($value->opsi);
+            if($value->sub_status==1){
+                $value->subPertanyaan = $this->sub->where('pertanyaan_id', $value->id)->get()->getResultObject();
+                foreach ($value->subPertanyaan as $key => $sub) {
+                    $sub->opsi = unserialize($sub->opsi);
+                }
+            }
+        }
         return $this->respond($result);
     }
 

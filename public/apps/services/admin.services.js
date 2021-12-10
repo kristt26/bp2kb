@@ -572,7 +572,8 @@ function pendudukServices($http, $q, helperServices, AuthService, message) {
     var service = {};
     service.data = [];
     return {
-        get: get, 
+        get: get,
+        getPenduduk: getPenduduk, 
         post: post, 
         put: put, 
         deleted: deleted
@@ -596,6 +597,23 @@ function pendudukServices($http, $q, helperServices, AuthService, message) {
         );
         return def.promise;
     }
+    function getPenduduk(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + "/get/" + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
     function post(param) {
         var def = $q.defer();
         $http({
@@ -605,7 +623,6 @@ function pendudukServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                service.data.petugas.push(res.data);
                 def.resolve(res.data);
             },
             (err) => {
@@ -625,12 +642,6 @@ function pendudukServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.petugas.find(x => x.id == param.id);
-                if (data) {
-                    data.nama = param.nama;
-                    data.telepon = param.telepon;
-                    data.alamat = param.alamat;
-                }
                 def.resolve(res.data);
             },
             (err) => {
@@ -648,8 +659,6 @@ function pendudukServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var index = service.data.indexOf(param);
-                service.data.splice(index, 1);
                 def.resolve(res.data);
             },
             (err) => {

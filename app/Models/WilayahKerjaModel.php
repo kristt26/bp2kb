@@ -40,11 +40,13 @@ class WilayahKerjaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function __construct() {
+        $this->db = \Config\Database::connect();
+    }
     public function getWilayah($petugasid)
     {
-        $db = \Config\Database::connect();
         try {
-            $data = $db->query("SELECT
+            $data = $this->db->query("SELECT
                 `wilayahkerja`.`id` AS `wilayahid`,
                 `wilayahkerja`.`kelurahanid`,
                 `kelurahans`.`kelurahan`,

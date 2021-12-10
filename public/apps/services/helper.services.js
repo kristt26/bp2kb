@@ -36,5 +36,6 @@ function helperServices($location) {
             roman = (key[+digits.pop() + (i * 10)] || "") + roman;
         return Array(+digits.join("") + 1).join("M") + roman;
     }
+    service.hubunganKeluarga = [{no: '1', nama: 'Kepala Keluarga'},{no: '2', nama: 'Istri'}, {no: '3', nama: 'Anak'}, {no: '4', nama: 'Lainnya'}];
     return service;
 }

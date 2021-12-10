@@ -386,18 +386,217 @@ function petugasKontroller($scope, petugasServices, message, helperServices) {
 function pendudukKontroller($scope, pendudukServices, message, helperServices) {
     $scope.$emit("SendUp", "Penduduk");
     $scope.datas = [];
+    $scope.model = {};
+    $scope.hubunganKeluarga = helperServices.hubunganKeluarga;
+    $scope.ibuKandung = [];
     $scope.showForm = false;
+    $scope.model.penduduk = [];
+    $scope.kb = [];
+    $scope.pb = [];
+    $scope.jawab = "Ya";
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var left, opacity, scale; //fieldset properties which we will animate
+    var animating; //flag to prevent quick multi-click glitches
 
     pendudukServices.get().then(res => {
         $scope.datas = res;
-        console.log(res.kelurahan);
+        $scope.kb = $scope.datas.pertanyaan.filter(x=>x.kategori=='KB')
+        $scope.pb = $scope.datas.pertanyaan.filter(x=>x.kategori=='PB')
+        console.log(res);
     })
     $scope.add = () => {
         $scope.showForm = true;
     }
 
+    $scope.edit = (item)=>{
+        pendudukServices.getPenduduk(item.id).then(res=>{
+            $scope.$applyAsync(x=>{
+                $scope.model = angular.copy(item);
+                $scope.model.penduduk = [];
+                res.forEach(element => {
+                   element.hubungan_keluarga = $scope.hubunganKeluarga.find(x=>x.no == element.hubungan_keluarga.no);
+                   $scope.model.penduduk.push(element);
+                   element.tanggal_lahir = new Date(element.tanggal_lahir);
+                   element.usia_kawin = parseInt(element.usia_kawin);
+                   element.urut = parseInt(element.urut);
+                });
+                $scope.kb = $scope.model.pertanyaan.filter(x=>x.kategori=='KB');
+                $scope.pb = $scope.model.pertanyaan.filter(x=>x.kategori=='PB');
+                $scope.rws = $scope.datas.kelurahan.rw.find(x=>x.id==item.rwid);
+                $scope.rts = $scope.rws.rt.find(x=>x.id==item.rtid);
+                $scope.model.no_rumah = parseInt($scope.model.no_rumah);
+                $scope.model.jumlah_anggota = parseInt($scope.model.jumlah_anggota);
+                console.log($scope.model);
+                console.log($scope.kb);
+                console.log($scope.pb);
+                $scope.showForm = true;
+            })
+        })
+    }
+
     $scope.check = (item) => {
         console.log(item);
+    }
+
+    $scope.setPenduduk = (item) => {
+        $scope.$applyAsync(x => {
+            $scope.model.penduduk = [];
+            for (let index = 1; index <= item; index++) {
+                if(index == 1){
+                    var pen = { no: index, hubungan_keluarga: $scope.hubunganKeluarga.find(x=>x.no == '1'), urut: index  };
+                    $scope.model.penduduk.push(pen);
+                }else{
+                    var pen = { no: index, urut: index};
+                    $scope.model.penduduk.push(pen);
+                }
+            }
+            console.log($scope.model);
+        });
+    }
+
+    $scope.next = (current, next) => {
+        if (animating) return false;
+        animating = true;
+        current_fs = $(current);
+        next_fs = $(next);
+
+        //activate next step on progressbar using the index of next_fs
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({
+            opacity: 0
+        }, {
+            step: function (now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale current_fs down to 80%
+                scale = 1 - (1 - now) * 0.2;
+                //2. bring next_fs from the right(50%)
+                left = (now * 50) + "%";
+                //3. increase opacity of next_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({
+                    'transform': 'scale(' + scale + ')',
+                    'position': 'absolute'
+                });
+                next_fs.css({
+                    'left': left,
+                    'opacity': opacity
+                });
+            },
+            duration: 800,
+            complete: function () {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    }
+
+    $scope.previous = (current, prev) => {
+        if (animating) return false;
+        animating = true;
+
+        current_fs = $(current);
+        previous_fs = $(prev);
+
+        //de-activate current step on progressbar
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+        //show the previous fieldset
+        previous_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({
+            opacity: 0
+        }, {
+            step: function (now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale previous_fs from 80% to 100%
+                scale = 0.8 + (1 - now) * 0.2;
+                //2. take current_fs to the right(50%) - from 0%
+                left = ((1 - now) * 50) + "%";
+                //3. increase opacity of previous_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({
+                    'left': left
+                });
+                previous_fs.css({
+                    'transform': 'scale(' + scale + ')',
+                    'opacity': opacity
+                });
+            },
+            duration: 800,
+            complete: function () {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    }
+
+    $scope.save = ()=>{
+        if($scope.model.id){
+            message.dialog('Ingin mengubah data?', 'Ya', 'Tidak').then(x=>{
+                $scope.model.pertanyaan = [];
+                $scope.kb.forEach(element => {
+                    $scope.model.pertanyaan.push(element)
+                });
+                $scope.pb.forEach(element => {
+                    $scope.model.pertanyaan.push(element)
+                });
+                pendudukServices.put($scope.model).then(res=>{
+                    document.location.href = helperServices.url + "petugas/penduduk";
+                })
+            });
+        }else{
+            message.dialog('Ingin menyimpan data?', 'Ya', 'Tidak').then(x=>{
+                $scope.model.pertanyaan = [];
+                $scope.kb.forEach(element => {
+                    $scope.model.pertanyaan.push(element)
+                });
+                $scope.pb.forEach(element => {
+                    $scope.model.pertanyaan.push(element)
+                });
+                pendudukServices.post($scope.model).then(res=>{
+                    document.location.href = helperServices.url + "petugas/penduduk";
+                })
+            });
+        }
+    }
+
+    $scope.autoSet = (item, set, value )=>{
+        if(set=='hubunganKeluarga'){
+            if(item == 0){
+                // var kepala = $scope.model.penduduk[0];
+                // kepala.hubungan_keluarga = $scope.hubunganKeluarga.find(x=>x.no == '1');
+                // console.log($scope.model.penduduk);
+            }
+        }else if(set=='ibuKandung'){
+            if(value.no=='3'){
+                $scope.ibuKandung = [];
+                var check = $scope.model.penduduk[item-1];
+                if(check.jenis_kelamin=='Perempuan'){
+                    $scope.ibuKandung.push($scope.model.penduduk[item-1]);
+                    $scope.ibuKandung.push({nama:"00"});
+                }
+                // else{
+
+                // }
+                // $scope.ibuKandung.push($scope.model.penduduk.find(x=>x.no == 2));
+                // $scope.ibuKandung.push({nama:"00"});
+                console.log($scope.ibuKandung);
+            }
+        }
+    }
+
+    $scope.hapus = (item)=>{
+        pendudukServices.deleted(item).then(res=>{
+            document.location.href = helperServices.url + "petugas/penduduk";
+        })
     }
 }
 
@@ -409,7 +608,10 @@ function kuesionerKontroller($scope, kuesionerServices, message, helperServices)
     $scope.model = {};
     $scope.modelSub = {};
     $scope.tambah = false;
-    kuesionerServices.get().then(res=>{
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+    kuesionerServices.get().then(res => {
         $scope.datas = res;
         console.log(res);
     })

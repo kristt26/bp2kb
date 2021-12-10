@@ -20,12 +20,12 @@
                     <span class="menu-title">Petugas</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="<?=base_url('penduduk')?>">
                     <i class="mdi mdi-file-document-box menu-icon"></i>
                     <span class="menu-title">Penduduk</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="<?=base_url('admin/kuesioner')?>">
                     <i class="mdi mdi-file-document-box menu-icon"></i>
@@ -45,6 +45,18 @@
                 <a class="nav-link" href="<?=base_url('petugas/penduduk')?>">
                     <i class="mdi mdi-file-document-box menu-icon"></i>
                     <span class="menu-title">Penduduk</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?=base_url('petugas/rekaprt')?>">
+                    <i class="mdi mdi-file-document-box menu-icon"></i>
+                    <span class="menu-title">Rekap RT</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?=base_url('petugas/backup')?>">
+                    <i class="mdi mdi-file-document-box menu-icon"></i>
+                    <span class="menu-title">Backup</span>
                 </a>
             </li>
             <?php endif;?>

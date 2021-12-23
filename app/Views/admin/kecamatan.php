@@ -56,7 +56,8 @@
                                             <td>{{item.kecamatan}}</td>
                                             <td>{{item.jenis}}</td>
                                             <td class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2" ng-click="edit(item)">
+                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2"
+                                                    ng-click="edit(item)">
                                                     <i class="mdi mdi-pencil-outline"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-rounded btn-icon mr-2"

@@ -7,6 +7,8 @@ angular.module('admin.service', [])
     .factory('petugasServices', petugasServices)
     .factory('pendudukServices', pendudukServices)
     .factory('kuesionerServices', kuesionerServices)
+    .factory('laporanServices', laporanServices)
+    .factory('laporanPetugasServices', laporanPetugasServices)
     ;
 
 
@@ -252,7 +254,7 @@ function kelurahanServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                service.data.push(res.data);
+                service.data.kelurahan.push(res.data);
                 def.resolve(res.data);
             },
             (err) => {
@@ -263,7 +265,7 @@ function kelurahanServices($http, $q, helperServices, AuthService, message) {
         return def.promise;
     }
     function put(param) {
-        var item = { kecamatan: param.kecamatan, jenis: param.jenis};
+        var item = { kelurahan: param.kelurahan, jenis: param.jenis};
         var def = $q.defer();
         $http({
             method: 'put',
@@ -272,9 +274,9 @@ function kelurahanServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.id);
+                var data = service.data.kelurahan.find(x => x.id == param.id);
                 if (data) {
-                    data.kecamatan = param.kecamatan;
+                    data.kelurahan = param.kelurahan;
                     data.jenis = param.jenis;
                 }
                 def.resolve(res.data);
@@ -294,8 +296,8 @@ function kelurahanServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var index = service.data.indexOf(param);
-                service.data.splice(index, 1);
+                var index = service.data.kelurahan.indexOf(param);
+                service.data.kelurahan.splice(index, 1);
                 def.resolve(res.data);
             },
             (err) => {
@@ -348,6 +350,7 @@ function rwServices($http, $q, helperServices, AuthService, message) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
+                res.data.rt=[];
                 service.data.push(res.data);
                 def.resolve(res.data);
             },
@@ -753,6 +756,60 @@ function kuesionerServices($http, $q, helperServices, AuthService, message) {
             (res) => {
                 var index = service.data.indexOf(param);
                 service.data.splice(index, 1);
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+}
+
+function laporanServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'admin/laporan';
+    var service = {};
+    service.data = [];
+    return {
+        get: get, 
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + "/read/",
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                message.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+}
+
+function laporanPetugasServices($http, $q, helperServices, AuthService, message) {
+    var controller = helperServices.url + 'petugas/laporan';
+    var service = {};
+    service.data = [];
+    return {
+        get: get, 
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + "/read/",
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
                 def.resolve(res.data);
             },
             (err) => {

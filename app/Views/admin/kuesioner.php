@@ -236,7 +236,7 @@
                                             <th width="40%">Pertanyaan</th>
                                             <th>Sub Pertanyaan</th>
                                             <th>Jenis Jawaban</th>
-                                            <th class="text-center">Action</th>
+                                            <!-- <th class="text-center">Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -249,7 +249,7 @@
                                             </td>
                                             <td>{{item.setJawaban}}</td>
                                             <td>{{item.username}}</td>
-                                            <td class="d-flex justify-content-center">
+                                            <!-- <td class="d-flex justify-content-center">
                                                 <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2"
                                                     ng-click="edit(item, 'Edit')">
                                                     <i class="mdi mdi-pencil-outline"></i>
@@ -258,7 +258,7 @@
                                                     ng-click="hapus(item)">
                                                     <i class="mdi mdi-delete-outline"></i>
                                                 </button>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>

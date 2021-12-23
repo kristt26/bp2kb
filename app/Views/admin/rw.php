@@ -32,7 +32,7 @@
                                 <table class="table table-striped table-inverse">
                                     <thead class="thead-inverse">
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>No RW</th>
                                             <th class="text-center">Action</th>
                                         </tr>
@@ -74,7 +74,7 @@
                                 <table class="table table-striped table-inverse">
                                     <thead class="thead-inverse">
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>No RW</th>
                                             <th class="text-center">Action</th>
                                         </tr>

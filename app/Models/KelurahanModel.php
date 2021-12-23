@@ -14,7 +14,7 @@ class KelurahanModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['id', 'kelurahan', 'jenis', 'kecamatanid'];
+    protected $allowedFields = ['kelurahan', 'jenis', 'kecamatanid'];
 
     // Dates
     protected $useTimestamps = false;

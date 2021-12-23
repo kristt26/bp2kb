@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Form {{titleForm}} Kelurahan</h4>
-                            <form class="forms-sample">
+                            <form class="forms-sample" ng-submit="save()">
                                 <div class="form-group">
                                     <label for="kelurahan">Kelurahan</label>
                                     <input type="text" class="form-control" id="kelurahan" placeholder="Kelurahan"
@@ -40,7 +40,7 @@
                                 <table class="table table-striped table-inverse">
                                     <thead class="thead-inverse">
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>Kelurahan</th>
                                             <th>Jenis</th>
                                             <th class="text-center">Action</th>
@@ -52,7 +52,8 @@
                                             <td>{{item.kelurahan}}</td>
                                             <td>{{item.jenis}}</td>
                                             <td class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2" ng-click="edit(item, 'Edit')">
+                                                <button type="button" class="btn btn-warning btn-rounded btn-icon mr-2"
+                                                    ng-click="edit(item, 'Edit')">
                                                     <i class="mdi mdi-pencil-outline"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-rounded btn-icon mr-2"

@@ -7,6 +7,8 @@ angular.module('adminctrl', [])
     .controller('petugasKontroller', petugasKontroller)
     .controller('pendudukKontroller', pendudukKontroller)
     .controller('kuesionerKontroller', kuesionerKontroller)
+    .controller('laporanController', laporanController)
+    .controller('laporanPetugasController', laporanPetugasController)
     ;
 
 
@@ -199,12 +201,13 @@ function kelurahanKontroller($scope, kelurahanServices, message, helperServices)
     $scope.save = () => {
         message.dialog("Ingin Melanjutkan", "Yakin", "Tidak").then(x => {
             if ($scope.model.id) {
-                kecamatanServices.put($scope.model).then(res => {
+                kelurahanServices.put($scope.model).then(res => {
                     $scope.info("Proses Berhasil");
                     $scope.model = {};
                 })
             } else {
-                kecamatanServices.post($scope.model).then(res => {
+                $scope.model.kecamatanid = urlParams.get('kecamatanid');
+                kelurahanServices.post($scope.model).then(res => {
                     message.info("Proses Berhasil");
                     $scope.model = {};
                     $scope.tambah = false;
@@ -215,7 +218,7 @@ function kelurahanKontroller($scope, kelurahanServices, message, helperServices)
 
     $scope.hapus = (item) => {
         message.dialog("Ingin menghapus", "Ya", "Tidak").then(x => {
-            kecamatanServices.deleted(item).then(res => {
+            kelurahanServices.deleted(item).then(res => {
                 message.info("Berhasil menghapus data");
 
             })
@@ -400,30 +403,30 @@ function pendudukKontroller($scope, pendudukServices, message, helperServices) {
 
     pendudukServices.get().then(res => {
         $scope.datas = res;
-        $scope.kb = $scope.datas.pertanyaan.filter(x=>x.kategori=='KB')
-        $scope.pb = $scope.datas.pertanyaan.filter(x=>x.kategori=='PB')
+        $scope.kb = $scope.datas.pertanyaan.filter(x => x.kategori == 'KB')
+        $scope.pb = $scope.datas.pertanyaan.filter(x => x.kategori == 'PB')
         console.log(res);
     })
     $scope.add = () => {
         $scope.showForm = true;
     }
 
-    $scope.edit = (item)=>{
-        pendudukServices.getPenduduk(item.id).then(res=>{
-            $scope.$applyAsync(x=>{
+    $scope.edit = (item) => {
+        pendudukServices.getPenduduk(item.id).then(res => {
+            $scope.$applyAsync(x => {
                 $scope.model = angular.copy(item);
                 $scope.model.penduduk = [];
                 res.forEach(element => {
-                   element.hubungan_keluarga = $scope.hubunganKeluarga.find(x=>x.no == element.hubungan_keluarga.no);
-                   $scope.model.penduduk.push(element);
-                   element.tanggal_lahir = new Date(element.tanggal_lahir);
-                   element.usia_kawin = parseInt(element.usia_kawin);
-                   element.urut = parseInt(element.urut);
+                    element.hubungan_keluarga = $scope.hubunganKeluarga.find(x => x.no == element.hubungan_keluarga.no);
+                    $scope.model.penduduk.push(element);
+                    element.tanggal_lahir = new Date(element.tanggal_lahir);
+                    element.usia_kawin = parseInt(element.usia_kawin);
+                    element.urut = parseInt(element.urut);
                 });
-                $scope.kb = $scope.model.pertanyaan.filter(x=>x.kategori=='KB');
-                $scope.pb = $scope.model.pertanyaan.filter(x=>x.kategori=='PB');
-                $scope.rws = $scope.datas.kelurahan.rw.find(x=>x.id==item.rwid);
-                $scope.rts = $scope.rws.rt.find(x=>x.id==item.rtid);
+                $scope.kb = $scope.model.pertanyaan.filter(x => x.kategori == 'KB');
+                $scope.pb = $scope.model.pertanyaan.filter(x => x.kategori == 'PB');
+                $scope.rws = $scope.datas.kelurahan.rw.find(x => x.id == item.rwid);
+                $scope.rts = $scope.rws.rt.find(x => x.id == item.rtid);
                 $scope.model.no_rumah = parseInt($scope.model.no_rumah);
                 $scope.model.jumlah_anggota = parseInt($scope.model.jumlah_anggota);
                 console.log($scope.model);
@@ -442,11 +445,11 @@ function pendudukKontroller($scope, pendudukServices, message, helperServices) {
         $scope.$applyAsync(x => {
             $scope.model.penduduk = [];
             for (let index = 1; index <= item; index++) {
-                if(index == 1){
-                    var pen = { no: index, hubungan_keluarga: $scope.hubunganKeluarga.find(x=>x.no == '1'), urut: index  };
+                if (index == 1) {
+                    var pen = { no: index, hubungan_keluarga: $scope.hubunganKeluarga.find(x => x.no == '1'), urut: index };
                     $scope.model.penduduk.push(pen);
-                }else{
-                    var pen = { no: index, urut: index};
+                } else {
+                    var pen = { no: index, urut: index };
                     $scope.model.penduduk.push(pen);
                 }
             }
@@ -538,9 +541,9 @@ function pendudukKontroller($scope, pendudukServices, message, helperServices) {
         });
     }
 
-    $scope.save = ()=>{
-        if($scope.model.id){
-            message.dialog('Ingin mengubah data?', 'Ya', 'Tidak').then(x=>{
+    $scope.save = () => {
+        if ($scope.model.id) {
+            message.dialog('Ingin mengubah data?', 'Ya', 'Tidak').then(x => {
                 $scope.model.pertanyaan = [];
                 $scope.kb.forEach(element => {
                     $scope.model.pertanyaan.push(element)
@@ -548,12 +551,12 @@ function pendudukKontroller($scope, pendudukServices, message, helperServices) {
                 $scope.pb.forEach(element => {
                     $scope.model.pertanyaan.push(element)
                 });
-                pendudukServices.put($scope.model).then(res=>{
+                pendudukServices.put($scope.model).then(res => {
                     document.location.href = helperServices.url + "petugas/penduduk";
                 })
             });
-        }else{
-            message.dialog('Ingin menyimpan data?', 'Ya', 'Tidak').then(x=>{
+        } else {
+            message.dialog('Ingin menyimpan data?', 'Ya', 'Tidak').then(x => {
                 $scope.model.pertanyaan = [];
                 $scope.kb.forEach(element => {
                     $scope.model.pertanyaan.push(element)
@@ -561,27 +564,27 @@ function pendudukKontroller($scope, pendudukServices, message, helperServices) {
                 $scope.pb.forEach(element => {
                     $scope.model.pertanyaan.push(element)
                 });
-                pendudukServices.post($scope.model).then(res=>{
+                pendudukServices.post($scope.model).then(res => {
                     document.location.href = helperServices.url + "petugas/penduduk";
                 })
             });
         }
     }
 
-    $scope.autoSet = (item, set, value )=>{
-        if(set=='hubunganKeluarga'){
-            if(item == 0){
+    $scope.autoSet = (item, set, value) => {
+        if (set == 'hubunganKeluarga') {
+            if (item == 0) {
                 // var kepala = $scope.model.penduduk[0];
                 // kepala.hubungan_keluarga = $scope.hubunganKeluarga.find(x=>x.no == '1');
                 // console.log($scope.model.penduduk);
             }
-        }else if(set=='ibuKandung'){
-            if(value.no=='3'){
+        } else if (set == 'ibuKandung') {
+            if (value.no == '3') {
                 $scope.ibuKandung = [];
-                var check = $scope.model.penduduk[item-1];
-                if(check.jenis_kelamin=='Perempuan'){
-                    $scope.ibuKandung.push($scope.model.penduduk[item-1]);
-                    $scope.ibuKandung.push({nama:"00"});
+                var check = $scope.model.penduduk[item - 1];
+                if (check.jenis_kelamin == 'Perempuan') {
+                    $scope.ibuKandung.push($scope.model.penduduk[item - 1]);
+                    $scope.ibuKandung.push({ nama: "00" });
                 }
                 // else{
 
@@ -593,8 +596,8 @@ function pendudukKontroller($scope, pendudukServices, message, helperServices) {
         }
     }
 
-    $scope.hapus = (item)=>{
-        pendudukServices.deleted(item).then(res=>{
+    $scope.hapus = (item) => {
+        pendudukServices.deleted(item).then(res => {
             document.location.href = helperServices.url + "petugas/penduduk";
         })
     }
@@ -664,6 +667,48 @@ function kuesionerKontroller($scope, kuesionerServices, message, helperServices)
                 $scope.tambah = false;
             })
         })
+    }
+}
+
+function laporanController($scope, laporanServices, message, helperServices) {
+    $scope.$emit("SendUp", "Dafar Kecamatan");
+    $scope.datas = [];
+    $scope.model = {};
+    $scope.modelKelurahan = {};
+    laporanServices.get().then(res => {
+        $scope.datas = res;
+        console.log(res);
+    })
+    $scope.download = () => {
+        let pdf = new jsPDF('l', 'pt', 'a4'); 
+        
+        pdf.setFontSize(9);
+        pdf.html(document.getElementById('print'), {
+            callback: function (pdf) {
+                pdf.save('test.pdf');
+            }
+        });
+    }
+}
+
+function laporanPetugasController($scope, laporanPetugasServices, message, helperServices) {
+    $scope.$emit("SendUp", "Laporan");
+    $scope.datas = [];
+    $scope.model = {};
+    $scope.modelKelurahan = {};
+    laporanPetugasServices.get().then(res => {
+        $scope.datas = res;
+        console.log(res);
+    })
+    $scope.download = () => {
+        let pdf = new jsPDF('l', 'pt', 'a4'); 
+        
+        pdf.setFontSize(9);
+        pdf.html(document.getElementById('print'), {
+            callback: function (pdf) {
+                pdf.save('test.pdf');
+            }
+        });
     }
 }
 
